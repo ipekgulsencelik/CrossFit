@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, MenuProps, Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Button, Checkbox, Form, Input, MenuProps, Breadcrumb, Layout, Menu, theme, InputNumber, TimePicker, Select, Divider } from 'antd';
 
 const { Header, Content, Sider } = Layout;
 
@@ -25,6 +25,8 @@ const items2: MenuProps['items'] = menu.map(
 );
 
 function App() {
+  const [movementCount, setMovementCount] = useState<number>(0);
+
   const onFinish = (values: any) => {
     console.log('Success:', values);
   };
@@ -65,45 +67,56 @@ function App() {
           >
             <Form
               name="basic"
-              labelCol={{span: 4 }}
-              wrapperCol={{span: 16 }}
+              labelCol={{ span: 16 }}
               style={{
                 maxWidth: 600,
               }}
               onFinish={onFinish}
               autoComplete="off"
             >
-              <Form.Item
-                label="Time"
-                name="time"
-              >
-                <Input />
-              </Form.Item>
+              <div style={{ display: 'flex', gap: 66 }}>
+                <div>
+                  <Form.Item
+                    label="Total Time - Minute"
+                    name="time"
+                  >
+                    <InputNumber min={0} />
+                  </Form.Item>
 
-              <Form.Item
-                label="Movement Count"
-                name="movementCount"
-              >
-                <Input />
-              </Form.Item>
+                  <Form.Item
+                    label="Movement Count"
+                    name="movementCount"
+                  >
+                    <InputNumber onChange={(e) => setMovementCount(e as number)} min={0} />
+                  </Form.Item>
 
-              <Form.Item
-                label="Second for Each Time"
-                name="secondForEachTime"
-              >
-                <Input />
-              </Form.Item>
+                  <Form.Item
+                    label="Second for Each Time"
+                    name="secondForEachTime"
+                  >
+                    <InputNumber min={0} />
+                  </Form.Item>
+                </div>
 
-              {/* <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
-              >
+                <Divider type='vertical' style={{ height: 'auto' }} />
+
+                <Form.Item>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    {Array.from(Array(movementCount).keys()).map((item: number) => (
+                      <>
+                        {item + 1}.
+                        <Select style={{ width: 400 }} />
+                      </>
+                    ))}
+                  </div>
+                </Form.Item>
+              </div>
+
+              <Form.Item>
                 <Button type="primary" htmlType="submit">
-                  Submit
+                  Create Workout
                 </Button>
-              </Form.Item> */}
+              </Form.Item>
             </Form>
           </Content>
         </Layout>
