@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, MenuProps, Breadcrumb, Layout, Menu, theme, InputNumber, TimePicker, Select, Divider } from 'antd';
+import { Typography, Button, Form, Input, MenuProps, Breadcrumb, Layout, Menu, theme, InputNumber, TimePicker, Select, Divider } from 'antd';
 
 const { Header, Content, Sider } = Layout;
+const { Title } = Typography;
 
 const menu = [{
   icon: LaptopOutlined,
@@ -65,6 +66,8 @@ function App() {
               background: 'white'
             }}
           >
+            <Title level={2}>Create Workout</Title>
+
             <Form
               name="basic"
               labelCol={{ span: 16 }}
