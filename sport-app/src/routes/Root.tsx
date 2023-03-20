@@ -1,12 +1,13 @@
 import React from 'react';
 import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuProps, Layout, Menu } from 'antd';
+import { Outlet } from 'react-router-dom';
 
-const { Header, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const menu = [{
   icon: LaptopOutlined,
-  name: "Create Training"
+  name: "Create Workout"
 }, {
   icon: UserOutlined,
   name: "User Panel"
@@ -40,7 +41,18 @@ function Root() {
             items={items2}
           />
         </Sider>
-        <Layout style={{ padding: '24px' }}></Layout>
+        <Layout style={{ padding: '24px' }}>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: 'white'
+            }}
+          >
+            <Outlet />
+          </Content>
+        </Layout>
       </Layout>
     </Layout>
   )

@@ -8,7 +8,7 @@ const { Header, Content, Sider } = Layout;
 
 const menu = [{
   icon: LaptopOutlined,
-  name: "Create Training"
+  name: "Create Workout"
 }, {
   icon: UserOutlined,
   name: "User Panel"

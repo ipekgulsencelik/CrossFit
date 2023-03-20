@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
 import './index.css'
 import Root from './routes/Root';
+import WorkoutCreator from './routes/workout-creator/WorkoutCreator';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -12,16 +12,17 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    children: [
+      {
+        path: "/createWorkout",
+        element: <WorkoutCreator />,
+      }
+    ]
   },
-  {
-    path: "/users",
-    element: <div>Users!</div>,
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    {/* <App /> */}
   </React.StrictMode>,
 )
