@@ -9,6 +9,7 @@ const { Title } = Typography;
 
 const CreateWorkout = () => {
     const [movementCount, setMovementCount] = useState<number>(0);
+    const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
@@ -16,6 +17,7 @@ const CreateWorkout = () => {
 
     const onChange = (key: string) => {
         setMovementCount(0);
+        form.resetFields();
     };
 
     const items: TabsProps['items'] = [
@@ -93,8 +95,8 @@ const CreateWorkout = () => {
     return (
         <>
             <Title level={2}>Create Workout</Title>
-            < Form name="basic"
-                labelCol={{ span: 16 }} style={{ maxWidth: 600 }}
+            < Form form={form} name="createWorkout"
+                labelCol={{ span: 16 }}
                 onFinish={onFinish} autoComplete="off">
                 <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
             </Form>
