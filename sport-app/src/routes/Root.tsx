@@ -1,24 +1,24 @@
 import React from 'react';
 import { LaptopOutlined, UserOutlined } from '@ant-design/icons';
 import { MenuProps, Layout, Menu } from 'antd';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const { Header, Content, Sider } = Layout;
 
 const menu = [{
   icon: LaptopOutlined,
-  name: "Create Workout"
+  name: "Create Workout",
+  key: 'createWorkout'
 }, {
   icon: UserOutlined,
-  name: "User Panel"
+  name: "User Manager",
+  key: 'userManager'
 }];
 
 const items2: MenuProps['items'] = menu.map(
-  (item, index) => {
-    const key = String(index + 1);
-
+  (item) => {
     return {
-      key: `sub${key}`,
+      key: item.key,
       icon: React.createElement(item.icon),
       label: item.name,
     };
@@ -26,6 +26,12 @@ const items2: MenuProps['items'] = menu.map(
 );
 
 function Root() {
+  const navigate = useNavigate();
+
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    navigate(`/${key}`)
+  };
+
   return (
     <Layout style={{ height: '100vh' }}>
       <Header className="header">
@@ -39,6 +45,7 @@ function Root() {
             defaultOpenKeys={['sub1']}
             style={{ height: '100%', borderRight: 0 }}
             items={items2}
+            onClick={onClick}
           />
         </Sider>
         <Layout style={{ padding: '24px' }}>
