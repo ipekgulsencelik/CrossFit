@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, Button, Form, Tabs } from 'antd';
+import { Typography, Button, Form, Tabs, Divider } from 'antd';
 import type { TabsProps } from 'antd';
 
 import Detail from './details/Detail';
@@ -15,7 +15,7 @@ const CreateWorkout = () => {
     };
 
     const onChange = (key: string) => {
-        console.log(key);
+        setMovementCount(0);
     };
 
     const items: TabsProps['items'] = [
@@ -23,17 +23,14 @@ const CreateWorkout = () => {
             key: '1',
             label: `EMOM`,
             children: (
-                < Form
-                    name="basic"
-                    labelCol={{ span: 16 }}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                >
+                <>
                     <div style={{ display: 'flex', gap: 66 }}>
-                        <Detail movementCount={movementCount} setMovementCount={setMovementCount} />
+                        <Detail workoutDetail={[
+                            { label: 'Total Time - Minute', name: 'time' },
+                            { label: 'Movement Count', name: 'movementCount', onChange: setMovementCount, value: movementCount },
+                            { label: 'Second for Each Time', name: 'secondForEachTime' }
+                        ]} />
+                        <Divider type='vertical' style={{ height: 'auto' }} />
 
                         <SelectMovement movementCount={movementCount} />
                     </div>
@@ -43,24 +40,20 @@ const CreateWorkout = () => {
                             Create Workout
                         </Button>
                     </Form.Item>
-                </Form >
+                </>
             ),
         },
         {
             key: '2',
             label: `EMRAP`,
             children: (
-                < Form
-                    name="basic"
-                    labelCol={{ span: 16 }}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                >
+                <>
                     <div style={{ display: 'flex', gap: 66 }}>
-                        <Detail movementCount={movementCount} setMovementCount={setMovementCount} />
+                        <Detail workoutDetail={[
+                            { label: 'Total Time - Minute', name: 'time' },
+                            { label: 'Movement Count', name: 'movementCount', onChange: setMovementCount, value: movementCount }
+                        ]} />
+                        <Divider type='vertical' style={{ height: 'auto' }} />
 
                         <SelectMovement movementCount={movementCount} />
                     </div>
@@ -70,24 +63,20 @@ const CreateWorkout = () => {
                             Create Workout
                         </Button>
                     </Form.Item>
-                </Form >
+                </>
             ),
         },
         {
             key: '3',
             label: `FOR TIME`,
             children: (
-                < Form
-                    name="basic"
-                    labelCol={{ span: 16 }}
-                    style={{
-                        maxWidth: 600,
-                    }}
-                    onFinish={onFinish}
-                    autoComplete="off"
-                >
+                <>
                     <div style={{ display: 'flex', gap: 66 }}>
-                        <Detail movementCount={movementCount} setMovementCount={setMovementCount} />
+                        <Detail workoutDetail={[
+                            { label: 'Total Time - Minute', name: 'time' },
+                            { label: 'Movement Count', name: 'movementCount', onChange: setMovementCount, value: movementCount }
+                        ]} />
+                        <Divider type='vertical' style={{ height: 'auto' }} />
 
                         <SelectMovement movementCount={movementCount} />
                     </div>
@@ -96,18 +85,19 @@ const CreateWorkout = () => {
                         <Button type="primary" htmlType="submit">
                             Create Workout
                         </Button>
-                    </Form.Item>
-                </Form >
+                    </Form.Item></>
             ),
         },
     ];
 
-
     return (
         <>
             <Title level={2}>Create Workout</Title>
-
-            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            < Form name="basic"
+                labelCol={{ span: 16 }} style={{ maxWidth: 600 }}
+                onFinish={onFinish} autoComplete="off">
+                <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            </Form>
         </>
     )
 }

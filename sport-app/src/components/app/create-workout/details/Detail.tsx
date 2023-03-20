@@ -1,37 +1,29 @@
-import { Form, InputNumber, Divider } from 'antd';
+import { Form, InputNumber } from 'antd';
 
 type DetailProps = {
-    movementCount: number,
-    setMovementCount: (e: number) => void;
+    workoutDetail: workoutDetail[];
 };
 
-const Detail = ({ movementCount, setMovementCount }: DetailProps) => {
+type workoutDetail = {
+    label: string;
+    name: string;
+    onChange?: (e: number) => void;
+    value?: number;
+};
+
+const Detail = ({ workoutDetail }: DetailProps) => {
     return (
         <>
             <div>
-                <Form.Item
-                    label="Total Time - Minute"
-                    name="time"
-                >
-                    <InputNumber min={0} />
-                </Form.Item>
-
-                <Form.Item
-                    label="Movement Count"
-                    name="movementCount"
-                >
-                    <InputNumber value={movementCount} onChange={(e) => setMovementCount(e as number)} min={0} />
-                </Form.Item>
-
-                <Form.Item
-                    label="Second for Each Time"
-                    name="secondForEachTime"
-                >
-                    <InputNumber min={0} />
-                </Form.Item>
+                {workoutDetail.map((item: workoutDetail) => (
+                    <Form.Item
+                        label={item.label}
+                        name={item.name}
+                    >
+                        <InputNumber min={0} value={item.value} onChange={(e) => item.onChange && item.onChange(e as number)} />
+                    </Form.Item>
+                ))}
             </div>
-
-            <Divider type='vertical' style={{ height: 'auto' }} />
         </>
     );
 };
