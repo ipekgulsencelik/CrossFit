@@ -1,13 +1,33 @@
-import React from 'react'
-import { Typography, Button, Form, Tabs, Divider, DatePicker, Input, Select, Space, InputNumber } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Typography, Button, Form, Divider, DatePicker, Input, Select, Space } from 'antd';
 import CreateWorkout from '../../components/app/create-workout/CreateWorkout'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
 export default function WorkoutCreator() {
     const [form] = Form.useForm();
+    const [movemets, setMovements] = useState(null);
+
+    useEffect(() => {
+        getMovements();
+    }, []);
+
+    const getMovements = async () => {
+        const response = await axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
+            params: {
+                part: 'snippet',
+                playlistId: 'PLdWvFCOAvyr3EWQhtfcEMd3DVM5sJdPL4',
+                maxResults: 50,
+                key: 'AIzaSyCBgvOTdaE0HfTpQxucGc4oJKisAEg5pk8',
+            },
+        });
+        if (response) {
+            setMovements(response.data.items);
+        }
+    };
 
     const onFinish = (values: any) => {
         console.log('Success:', values);
@@ -44,15 +64,7 @@ export default function WorkoutCreator() {
                                         label="Workout Name"
                                         rules={[{ required: true, message: 'Missing first name' }]}
                                     >
-                                        <Input style={{ width: 250 }} />
-                                    </Form.Item>
-                                    <Form.Item
-                                        {...restField}
-                                        name={[name, 'workoutParts']}
-                                        label="Workout Parts"
-                                        rules={[{ required: true, message: 'Missing first name' }]}
-                                    >
-                                        <InputNumber style={{ width: 250 }} />
+                                        <Input />
                                     </Form.Item>
                                     <Space key={key} style={{ marginBottom: 8 }} >
                                         <Form.Item
@@ -60,7 +72,7 @@ export default function WorkoutCreator() {
                                             name={[name, 'first']}
                                             rules={[{ required: true, message: 'Missing first name' }]}
                                         >
-                                            <CreateWorkout />
+                                            <CreateWorkout movements={movemets} />
                                         </Form.Item>
                                         <MinusCircleOutlined onClick={() => remove(name)} />
                                     </Space>

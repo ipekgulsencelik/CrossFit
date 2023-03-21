@@ -7,7 +7,7 @@ import SelectMovement from './select-movement/SelectMovement';
 
 const { Title } = Typography;
 
-const CreateWorkout = () => {
+const CreateWorkout = ({ movements }: any) => {
     const [movementCount, setMovementCount] = useState<number>(0);
     const [form] = Form.useForm();
 
@@ -34,7 +34,7 @@ const CreateWorkout = () => {
                         ]} />
                         <Divider type='vertical' style={{ height: 'auto' }} />
 
-                        <SelectMovement movementCount={movementCount} />
+                        <SelectMovement movementCount={movementCount} movements={movements} />
                     </div>
 
                     <Form.Item>
@@ -57,7 +57,7 @@ const CreateWorkout = () => {
                         ]} />
                         <Divider type='vertical' style={{ height: 'auto' }} />
 
-                        <SelectMovement movementCount={movementCount} />
+                        <SelectMovement movementCount={movementCount} movements={movements} />
                     </div>
 
                     <Form.Item>
@@ -80,7 +80,7 @@ const CreateWorkout = () => {
                         ]} />
                         <Divider type='vertical' style={{ height: 'auto' }} />
 
-                        <SelectMovement movementCount={movementCount} />
+                        <SelectMovement movementCount={movementCount} movements={movements} />
                     </div>
 
                     <Form.Item>
