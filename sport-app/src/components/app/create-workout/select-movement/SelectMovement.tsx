@@ -6,6 +6,12 @@ type SelectMovementProps = {
 };
 
 const SelectMovement = ({ movementCount, movements }: SelectMovementProps) => {
+    const renderMovementOptions = () => {
+        return movements.map((item: any) => {
+            return { value: item.id, label: item.snippet.title }
+        });
+    };
+
     return (
         <>
             <Form.Item>
@@ -13,11 +19,7 @@ const SelectMovement = ({ movementCount, movements }: SelectMovementProps) => {
                     {Array.from(Array(movementCount).keys()).map((item: number) => (
                         <>
                             {item + 1}.
-                            <Select style={{ width: 400 }} >
-                                {movements?.map((item: any) => (
-                                    <Select.Option value={item.snippet.title}>{item.snippet.title}</Select.Option>
-                                ))}
-                            </Select>
+                            <Select style={{ width: 400 }} options={renderMovementOptions()} />
                         </>
                     ))}
                 </div>

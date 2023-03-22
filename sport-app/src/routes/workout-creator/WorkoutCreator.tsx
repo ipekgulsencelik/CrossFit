@@ -9,23 +9,28 @@ const { TextArea } = Input;
 
 export default function WorkoutCreator() {
     const [form] = Form.useForm();
-    const [movemets, setMovements] = useState(null);
+    const [movemets, setMovements] = useState<any>([]);
 
     useEffect(() => {
-        getMovements();
+        getMovements('', []);
     }, []);
 
-    const getMovements = async () => {
+    const getMovements = async (nextPageToken: string, moves: any, prevToken?: string) => {
         const response = await axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
             params: {
                 part: 'snippet',
-                playlistId: 'PLdWvFCOAvyr3EWQhtfcEMd3DVM5sJdPL4',
+                playlistId: 'PLKeP6lzWrjONXZOUz8ypcfMaPYuGJZPi0',
                 maxResults: 50,
                 key: 'AIzaSyCBgvOTdaE0HfTpQxucGc4oJKisAEg5pk8',
+                prevToken: nextPageToken,
             },
         });
         if (response) {
-            setMovements(response.data.items);
+            if (response.data.nextPageToken && response.data.nextPageToken !== prevToken) {
+                getMovements(response.data.nextPageToken, [...moves, ...response.data.items], nextPageToken)
+            }
+        } else {
+            setMovements(moves);
         }
     };
 
